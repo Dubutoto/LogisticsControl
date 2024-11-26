@@ -1,7 +1,7 @@
 package org.example.logistics;
 import java.sql.*;
 
-
+// 테스트
 public class DAO {
     Connection con;
     public DAO() throws ClassNotFoundException, SQLException {
