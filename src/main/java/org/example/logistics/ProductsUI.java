@@ -3,15 +3,15 @@ package org.example.logistics;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class ProductUI {
+public class ProductsUI {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("조회할 Product ID를 입력하세요: ");
         int productId = scanner.nextInt();
 
-        ProductDAO dao = new ProductDAO(); // 1-2단계 실행!
-        ProductVO product = dao.one(productId); // 사용자 입력 ID로 조회
+        ProductsDAO dao = new ProductsDAO(); // 1-2단계 실행!
+        ProductsVO product = dao.one(productId); // 사용자 입력 ID로 조회
 
         if (product != null) {
             System.out.println("검색한 Product ID>> " + product.getProductId());

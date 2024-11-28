@@ -3,10 +3,10 @@ package org.example.logistics;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDAO {
+public class ProductsDAO {
     Connection con;
 
-    public ProductDAO() throws ClassNotFoundException, SQLException {
+    public ProductsDAO() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         System.out.println("1. 드라이버 설정 성공!");
 
@@ -17,8 +17,8 @@ public class ProductDAO {
         System.out.println("2. DB 연결 성공!");
     }
 
-    public ProductVO one(int productId) throws SQLException {
-        ProductVO product = new ProductVO();
+    public ProductsVO one(int productId) throws SQLException {
+        ProductsVO product = new ProductsVO();
 
         String sql = "SELECT * FROM Products WHERE product_id = ?";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -37,15 +37,15 @@ public class ProductDAO {
         return product;
     }
 
-    public ArrayList<ProductVO> list() throws SQLException {
-        ArrayList<ProductVO> list = new ArrayList<>();
+    public ArrayList<ProductsVO> list() throws SQLException {
+        ArrayList<ProductsVO> list = new ArrayList<>();
 
         String sql = "SELECT * FROM Products";
         PreparedStatement ps = con.prepareStatement(sql);
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            ProductVO product = new ProductVO();
+            ProductsVO product = new ProductsVO();
             product.setProductId(rs.getInt("product_id"));
             product.setName(rs.getString("name"));
             product.setDescription(rs.getString("description"));
