@@ -3,7 +3,11 @@ package org.example.logistics.suppliers;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class SuppliersUI {
+public class
+
+
+
+SuppliersUI {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         Scanner sc = new Scanner(System.in);
 
