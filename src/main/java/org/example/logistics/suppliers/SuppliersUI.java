@@ -1,4 +1,4 @@
-package org.example.logistics;
+package org.example.logistics.suppliers;
 
 import java.sql.SQLException;
 import java.util.Scanner;

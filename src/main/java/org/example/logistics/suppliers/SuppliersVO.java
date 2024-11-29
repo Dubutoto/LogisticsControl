@@ -1,4 +1,4 @@
-package org.example.logistics;
+package org.example.logistics.suppliers;
 
 import lombok.Getter;
 import lombok.Setter;

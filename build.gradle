@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.mongodb:mongo-java-driver:3.2.2'
 
     implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation 'org.mindrot:jbcrypt:0.4'
 }
 
 test {

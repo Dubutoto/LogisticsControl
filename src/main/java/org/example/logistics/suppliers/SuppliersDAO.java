@@ -1,6 +1,6 @@
-package org.example.logistics;
+package org.example.logistics.suppliers;
 
-import com.mysql.cj.jdbc.ConnectionImpl;
+import org.example.logistics.DatabaseConnection;
 
 import java.sql.*;
 
