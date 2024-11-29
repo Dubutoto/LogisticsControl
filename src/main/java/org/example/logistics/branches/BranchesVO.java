@@ -1,4 +1,4 @@
-package org.example.logistics;
+package org.example.logistics.branches;
 
 import lombok.Data;
 

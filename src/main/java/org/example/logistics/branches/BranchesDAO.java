@@ -1,4 +1,6 @@
-package org.example.logistics;
+package org.example.logistics.branches;
+
+import org.example.logistics.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -75,5 +77,16 @@ public class BranchesDAO {
             stmt.executeUpdate();
         }
     }
-}
 
+    public void sortingBranchSales(){
+
+    }
+
+    public void sortingBranchNames(){
+
+    }
+
+    public void sortingBranchProduct(){
+
+    }
+}

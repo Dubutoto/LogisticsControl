@@ -1,4 +1,4 @@
-package org.example.logistics;
+package org.example.logistics.branches;
 
 
 import java.sql.SQLException;
