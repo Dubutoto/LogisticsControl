@@ -10,10 +10,9 @@ public class WarehouseInventoryUI {
         int productId;
         int quantity;
         WarehouseInventoryDAOInterface dao = new WarehouseInventoryDAO();
-        WarehouseInventoryVO vo = new WarehouseInventoryVO();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("===== 창고 재고 관리입니다. =====");
+            System.out.println("===== 창고 재고 관리 =====");
             System.out.println("1. 창고 재고 보기 | 2. 창고 재고 요청 | 3. 창고 주문 내역 | 0. 끝내기");
             System.out.print("메뉴선택: ");
             int menu = sc.nextInt();
@@ -25,8 +24,9 @@ public class WarehouseInventoryUI {
                     ArrayList<WarehouseInventoryVO> list = dao.getAllInventory(warehouseId);
                     System.out.println("=====재고 목록=====");
                     System.out.println("| ID | 상품 이름 | 가격 | 수량 | 업데이트날짜 |");
+                    System.out.println("--------------------------------------------");
                     for (WarehouseInventoryVO bag : list) {
-                        System.out.println("| " + bag.getProductId() + "  | " + bag.getProductName() + " | " + bag.getProductPrice() + " | " + bag.getQuantity() + " |" + bag.getLastUpdate());
+                        System.out.println("| " + bag.getProductId() + "  | " + bag.getProductName() + " | " + bag.getProductPrice() + " | " + bag.getQuantity() + "개 |" + bag.getLastUpdate());
                     }
                     break;
                 case 2:
