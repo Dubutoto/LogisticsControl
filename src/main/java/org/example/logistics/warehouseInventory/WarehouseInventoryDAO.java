@@ -75,6 +75,9 @@ public class WarehouseInventoryDAO implements WarehouseInventoryDAOInterface {
         ps.executeUpdate();
         CRUDLogger.log("UPDATE", "창고", "창고ID: " + warehouseId + " 상품ID: " + productId + " 재고 추가: " + quantity);
 
+        String quantityQuery = "SELECT capacity FROM warehouse WHERE warehouse = ?";
+        PreparedStatement ps1 = con.prepareStatement(quantityQuery);
+
         String incomingQuery = "INSERT INTO Incoming (warehouse_id, product_id, supplier_id, quantity) VALUES (?, ?, ?, ?)";
         PreparedStatement incoming = con.prepareStatement(incomingQuery);
         incoming.setInt(1, warehouseId);
@@ -83,5 +86,60 @@ public class WarehouseInventoryDAO implements WarehouseInventoryDAOInterface {
         incoming.setInt(4, quantity);
         incoming.executeUpdate();
         CRUDLogger.log("CREATE", "Incoming", "상품ID: " + productId + " 재고: " + quantity);
+    }
+
+    public void addInventory1(int warehouseId, int productId, int supplierId, int quantity) {
+
+        try {
+            con.setAutoCommit(false);
+            String checkCapacityQuery = "SELECT COALESCE(SUM(quantity), 0) AS total_quantity, capacity " +
+                    "FROM Warehouse_Inventory " +
+                    "JOIN Warehouses ON Warehouse_Inventory.warehouse_id = Warehouses.warehouse_id " +
+                    "WHERE Warehouse_Inventory.warehouse_id = ? " +
+                    "GROUP BY Warehouses.warehouse_id";
+            PreparedStatement checkCapacityStmt = con.prepareStatement(checkCapacityQuery);
+            checkCapacityStmt.setInt(1, warehouseId);
+            ResultSet rs = checkCapacityStmt.executeQuery();
+
+            int currentQuantity = 0;
+            int warehouseCapacity = 0;
+
+            if (rs.next()) {
+                currentQuantity = rs.getInt("total_quantity");
+                warehouseCapacity = rs.getInt("capacity");
+            }
+
+            // 추가된 수량이 창고 용량을 초과하는지 확인
+            if (currentQuantity + quantity > warehouseCapacity) {
+                System.out.println("창고 용량 초과: 현재 수량(" + currentQuantity + ") + 추가 수량(" + quantity + ") > 용량(" + warehouseCapacity + ")");
+                throw new SQLException("창고 용량을 초과하여 입고할 수 없습니다.");
+            }
+
+
+
+            String incomingQuery = "INSERT INTO Incoming (warehouse_id, product_id, supplier_id, quantity) VALUES (?, ?, ?, ?)";
+            PreparedStatement incoming = con.prepareStatement(incomingQuery);
+            incoming.setInt(1, warehouseId);
+            incoming.setInt(2, productId);
+            incoming.setInt(3, supplierId);
+            incoming.setInt(4, quantity);
+            incoming.executeUpdate();
+
+            con.commit();
+            CRUDLogger.log("UPDATE", "창고", "창고ID: " + warehouseId + " 상품ID: " + productId + " 재고 추가: " + quantity);
+            CRUDLogger.log("CREATE", "Incoming", "상품ID: " + productId + " 재고: " + quantity);
+        } catch (SQLException e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                    CRUDLogger.log("ROLLBACK", "롤백 수행", "트랜잭션 롤백이 수행되었습니다.");
+                    System.out.println("트랜잭션 롤백이 수행되었습니다.");
+                } catch (SQLException rollbackEx) {
+                    CRUDLogger.log("ERROR", "롤백 에러", "롤백 실패");
+                    System.err.println("롤백 실패: " + rollbackEx.getMessage());
+                }
+            }
+            e.printStackTrace();
+        }
     }
 }

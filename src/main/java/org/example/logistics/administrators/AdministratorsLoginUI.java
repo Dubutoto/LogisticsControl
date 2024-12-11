@@ -7,7 +7,6 @@ import org.example.logistics.products.ProductManagementUI;
 import org.example.logistics.suppliers.SuppliersUI;
 import org.example.logistics.warehouses.WarehousesUI;
 
-
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.Scanner;

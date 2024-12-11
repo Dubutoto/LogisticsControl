@@ -41,10 +41,10 @@ public class OrdersUI {
                     System.out.println("| 주문 | 창고 | 지점 | 상태 | 상품 | 수량 | 총 금액 | 주문날짜 |");
                     System.out.println("==================================================");
                     for (OrdersVO o : list) {
-                        System.out.println("| " + o.getOrderId() +  " | " + o.getWarehouseId() +
-                                        " | " + o.getBranchId() +   " | " + o.getStatus() +
-                                        " | " + o.getProductId() +  " | " + o.getQuantity() +
-                                        " | " + df.format(o.getSumPrice()) +  "원 | " + o.getOrderDate());
+                        System.out.println("| " + o.getOrderId() + " | " + o.getWarehouseId() +
+                                " | " + o.getBranchId() + " | " + o.getStatus() +
+                                " | " + o.getProductId() + " | " + o.getQuantity() +
+                                " | " + df.format(o.getSumPrice()) + "원 | " + o.getOrderDate());
                     }
                     System.out.println();
                     break;
@@ -90,20 +90,23 @@ public class OrdersUI {
         }
     }
 
-    public static void warehouseFunction(){
-        try{
+    public static void warehouseFunction() {
+        try {
             OrdersUI ui = new OrdersUI();
             ui.WarehouseOrdersUI();
-        }catch (Exception e){
-            System.out.println("에러 메세지: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //System.out.println("에러 메세지: " + e.getMessage());
         }
     }
-    public static void branchFunction(){
-        try{
+
+    public static void branchFunction() {
+        try {
             OrdersUI ui = new OrdersUI();
             ui.BranchOrdersUI();
-        }catch (Exception e){
-            System.out.println("에러 메세지: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // System.out.println("에러 메세지: " + e.getMessage());
         }
     }
 }

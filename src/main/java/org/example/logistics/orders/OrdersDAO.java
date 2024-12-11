@@ -121,12 +121,6 @@ public class OrdersDAO implements OrdersDAOInterface {
             getRequestStmt.setInt(1, requestId);
             ResultSet requestResult = getRequestStmt.executeQuery();
 
-            if (!requestResult.next()) {
-                CRUDLogger.log("ERROR", "유효하지 않은 ID", "요청 ID를 찾을 수 없습니다.");
-                System.out.println("요청 ID를 찾을 수 없습니다.");
-                return;
-            }
-
             int orderId = requestResult.getInt("order_id");
             int warehouseId = requestResult.getInt("warehouse_id");
             int branchId = requestResult.getInt("branch_id");
@@ -134,10 +128,14 @@ public class OrdersDAO implements OrdersDAOInterface {
             int quantity = requestResult.getInt("quantity");
             String status = requestResult.getString("status");
 
+            if (!requestResult.next()) {
+                CRUDLogger.log("ERROR", "유효하지 않은 ID", "요청 ID를 찾을 수 없습니다.");
+                throw new SQLException("유효하지 않은 요청 ID");
+            }
+
             if (!status.equals("대기")) {
                 CRUDLogger.log("ERROR", "이미 처리된 요청", "이미 처리된 요청입니다.");
-                System.out.println("이미 처리된 요청입니다.");
-                return;
+                throw new SQLException("이미 처리된 요청 ID");
             }
 
             String getResponderProductQuery = "SELECT quantity FROM Warehouse_Inventory WHERE warehouse_id = ? AND product_id = ?";
